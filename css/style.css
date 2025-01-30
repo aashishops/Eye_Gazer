@@ -1,0 +1,124 @@
+/* General body styling to create a soft background and ensure readability */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #A3D8F4; /* Soft light blue background */
+    color: rgb(54, 218, 0); /* White text for contrast */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Game container styling */
+#game-container {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Score and calibration message styling */
+#score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #16df00; /* Neon green color for score */
+    margin-top: 20px;
+}
+
+#calibrationMessage {
+    font-size: 18px;
+    color: #ff5733; /* Red color for calibration message */
+    margin-top: 10px;
+}
+
+/* Canvas styling */
+#collisionCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid white;
+    background-color: #333;
+}
+
+/* Calibration point styling */
+#calibrationPoint {
+    fill: blue;
+}
+
+/* Button styling (if any buttons are added later) */
+#start-button, #calibration-button {
+    background-color: #A3D57B; /* Lime Green for the button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#start-button:hover, #calibration-button:hover {
+    background-color: #8CC756; /* Slightly darker lime green when hovered */
+}
+
+/* Eye-tracking area styling */
+#eye-tracking-area {
+    position: relative;
+    width: 80%;
+    height: 400px;
+    margin: 0 auto;
+    border: 2px dashed #39FF14; /* Neon Green border for eye-tracking area */
+    background-color: #1c85a1; /* Soft teal color for the tracking area */
+}
+
+/* Target ball styling */
+#target {
+    position: absolute;
+    width: 100px; /* Adjusted size */
+    height: 100px;
+    background-color: #FF5733; /* Bright red ball */
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 87, 51, 0.7);
+}
+
+/* Gaze dot styling */
+.eye-dot {
+    position: absolute;
+    width: 20px; /* Bigger size for better visibility */
+    height: 20px;
+    background-color: #39FF14; /* Neon green gaze dot */
+    border-radius: 50%;
+    pointer-events: none;
+    display: none; /* Hidden until tracking starts */
+}
+
+/* Instructions box styling */
+#instructions {
+    font-size: 14px;
+    margin: 20px auto;
+    padding: 10px;
+    width: 80%;
+    background-color: #ffffff;
+    color: #5700A5; /* Purple color for instructions text */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+/* Final score message styling */
+#final-score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF5733; /* Red color for final score message */
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Video feed styling */
+#webgazerVideoFeed {
+    width: 200px; /* Adjust as needed */
+    height: auto; /* Maintain aspect ratio */
+    position: fixed;
+    bottom: 10px; /* Position the camera feed */
+    right: 10px; /* Adjust position */
+    z-index: 1000; /* Ensure it's on top */
+    border: 2px solid #ccc; /* Optional: Add a border */
+    border-radius: 10px; /* Optional: Round the corners */
+}
