@@ -9,8 +9,11 @@ var calibrationPoints = [];
 var calibrationIndex = 0;
 var calibrationClicks = 0;
 var isCalibrated = false;
+var gameTime = 60;
+var timerInterval;
 
 window.onload = async function () {
+    alert("Calibration required: Look at the point and click on it 9 times to calibrate.");
     if (!window.saveDataAcrossSessions) {
         localforage.setItem('webgazerGlobalData', null);
         localforage.setItem('webgazerGlobalSettings', null);
@@ -48,7 +51,7 @@ function setupCollisionSystem() {
     ];
 
     node = { radius: 10, fixed: true };
-    target = { x: Math.random() * width, y: Math.random() * height, radius: 20 };
+    target = { x: Math.random() * width, y: Math.random() * height, radius: 40 };
 
     force = d3.layout.force()
         .gravity(0.05)
@@ -90,11 +93,23 @@ function handleCalibrationClick() {
         if (calibrationIndex >= calibrationPoints.length) {
             isCalibrated = true;
             canvas.removeEventListener("click", handleCalibrationClick);
-            drawScene();
+            startGame();
             return;
         }
     }
     drawCalibrationPoint();
+}
+
+function startGame() {
+    timerInterval = setInterval(() => {
+        gameTime--;
+        if (gameTime <= 0) {
+            clearInterval(timerInterval);
+            alert("Game Over! Your score: " + score);
+        }
+        drawScene();
+    }, 1000);
+    drawScene();
 }
 
 function drawScene() {
@@ -113,10 +128,11 @@ function drawScene() {
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";
     ctx.fillText("Score: " + score, 10, 30);
+    ctx.fillText("Time: " + gameTime + "s", 10, 60);
 }
 
 var collisionEyeListener = function (data) {
-    if (!data || !isCalibrated) return;
+    if (!data || !isCalibrated || gameTime <= 0) return;
 
     var rect = canvas.getBoundingClientRect();
     node.x = data.x - rect.left;
