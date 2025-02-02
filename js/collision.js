@@ -29,15 +29,33 @@ window.onload = async function () {
 
     setupCollisionSystem();
     webgazer.setGazeListener(collisionEyeListener);
+    createStartButton();
 };
 
-window.onbeforeunload = function () {
-    if (window.saveDataAcrossSessions) {
-        webgazer.end();
-    } else {
-        localforage.clear();
-    }
-};
+function createStartButton() {
+    let startButton = document.createElement("button");
+    startButton.innerText = "Start Game";
+    startButton.style.position = "absolute";
+    startButton.style.top = "10px";
+    startButton.style.left = "50%";
+    startButton.style.transform = "translateX(-50%)";
+    startButton.style.padding = "10px 20px";
+    startButton.style.fontSize = "16px";
+    startButton.style.cursor = "pointer";
+    document.body.appendChild(startButton);
+    startButton.addEventListener("click", resetGame);
+}
+
+function resetGame() {
+    score = 0;
+    gameTime = 60;
+    isCalibrated = false;
+    calibrationIndex = 0;
+    calibrationClicks = 0;
+    alert("Calibration required: Look at the point and click on it 9 times to calibrate.");
+    canvas.addEventListener("click", handleCalibrationClick);
+    drawCalibrationPoint();
+}
 
 function setupCollisionSystem() {
     var width = 1000;
@@ -50,8 +68,8 @@ function setupCollisionSystem() {
         { x: width * 0.5, y: height * 0.5 }
     ];
 
-    node = { radius: 10, fixed: true };
-    target = { x: Math.random() * width, y: Math.random() * height, radius: 40 };
+    node = { radius: 15, fixed: true };
+    target = { x: Math.random() * width, y: Math.random() * height, radius: 30 };
 
     force = d3.layout.force()
         .gravity(0.05)
@@ -66,7 +84,7 @@ function setupCollisionSystem() {
     canvas.height = height;
     canvas.style.position = "absolute";
     canvas.style.top = "60%";
-    canvas.style.left = "60%";
+    canvas.style.left = "50%";
     canvas.style.transform = "translate(-50%, -50%)";
     canvas.style.border = "2px solid white";
     canvas.style.backgroundColor = "#333";
@@ -101,6 +119,7 @@ function handleCalibrationClick() {
 }
 
 function startGame() {
+    clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         gameTime--;
         if (gameTime <= 0) {
